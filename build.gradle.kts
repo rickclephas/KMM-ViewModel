@@ -19,7 +19,7 @@ buildscript {
 
 allprojects {
     group = "com.rickclephas.kmm"
-    version = "1.0.0-ALPHA-20"
+    version = "1.0.0-ALPHA-20-kotlin-2.0.0-Beta5"
 
     repositories {
         mavenCentral()
