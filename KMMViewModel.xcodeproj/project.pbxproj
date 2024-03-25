@@ -17,6 +17,9 @@
 		1D198B302933C01800EF778D /* KMMVMViewModelScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D198B2E2933C01800EF778D /* KMMVMViewModelScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D198B312933C01800EF778D /* KMMViewModelCoreObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D198B2F2933C01800EF778D /* KMMViewModelCoreObjC.m */; };
 		1D198B322933C04400EF778D /* KMMViewModelCoreObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D198B272933BFD900EF778D /* KMMViewModelCoreObjC.framework */; };
+		1D2AAC592BB1F528005F1344 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AAC582BB1F528005F1344 /* Observable.swift */; };
+		1D2AAC5B2BB2053D005F1344 /* ViewModelObservationRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AAC5A2BB2053D005F1344 /* ViewModelObservationRegistrar.swift */; };
+		1D2AAC5D2BB205AC005F1344 /* ObservableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AAC5C2BB205AC005F1344 /* ObservableProperty.swift */; };
 		1D43F3EC2ABAFCA600EB3DFE /* ObservableViewModelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D43F3EB2ABAFCA600EB3DFE /* ObservableViewModelPublisher.swift */; };
 		1D43F3EE2ABAFD7D00EB3DFE /* ObservableViewModelPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D43F3ED2ABAFD7D00EB3DFE /* ObservableViewModelPublishers.swift */; };
 		1D6641DD2A5175C3000180D7 /* ChildViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6641DC2A5175C3000180D7 /* ChildViewModels.swift */; };
@@ -52,6 +55,9 @@
 		1D198B292933BFD900EF778D /* KMMViewModelCoreObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMMViewModelCoreObjC.h; sourceTree = "<group>"; };
 		1D198B2E2933C01800EF778D /* KMMVMViewModelScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMMVMViewModelScope.h; sourceTree = "<group>"; };
 		1D198B2F2933C01800EF778D /* KMMViewModelCoreObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMMViewModelCoreObjC.m; sourceTree = "<group>"; };
+		1D2AAC582BB1F528005F1344 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		1D2AAC5A2BB2053D005F1344 /* ViewModelObservationRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelObservationRegistrar.swift; sourceTree = "<group>"; };
+		1D2AAC5C2BB205AC005F1344 /* ObservableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableProperty.swift; sourceTree = "<group>"; };
 		1D43F3EB2ABAFCA600EB3DFE /* ObservableViewModelPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableViewModelPublisher.swift; sourceTree = "<group>"; };
 		1D43F3ED2ABAFD7D00EB3DFE /* ObservableViewModelPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableViewModelPublishers.swift; sourceTree = "<group>"; };
 		1D6641DC2A5175C3000180D7 /* ChildViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildViewModels.swift; sourceTree = "<group>"; };
@@ -114,6 +120,9 @@
 				1D0DA80129336AD40057DDAD /* ObservableViewModel.swift */,
 				1D43F3EB2ABAFCA600EB3DFE /* ObservableViewModelPublisher.swift */,
 				1D43F3ED2ABAFD7D00EB3DFE /* ObservableViewModelPublishers.swift */,
+				1D2AAC582BB1F528005F1344 /* Observable.swift */,
+				1D2AAC5A2BB2053D005F1344 /* ViewModelObservationRegistrar.swift */,
+				1D2AAC5C2BB205AC005F1344 /* ObservableProperty.swift */,
 			);
 			path = KMMViewModelCore;
 			sourceTree = "<group>";
@@ -303,9 +312,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D43F3EE2ABAFD7D00EB3DFE /* ObservableViewModelPublishers.swift in Sources */,
+				1D2AAC5B2BB2053D005F1344 /* ViewModelObservationRegistrar.swift in Sources */,
 				1D43F3EC2ABAFCA600EB3DFE /* ObservableViewModelPublisher.swift in Sources */,
 				1DDAF21E293545DD0049C114 /* KMMViewModel.swift in Sources */,
 				1D6641DD2A5175C3000180D7 /* ChildViewModels.swift in Sources */,
+				1D2AAC5D2BB205AC005F1344 /* ObservableProperty.swift in Sources */,
+				1D2AAC592BB1F528005F1344 /* Observable.swift in Sources */,
 				1D0DA80229336AD40057DDAD /* ObservableViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
