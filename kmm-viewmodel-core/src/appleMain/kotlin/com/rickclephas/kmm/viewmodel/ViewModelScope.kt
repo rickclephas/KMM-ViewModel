@@ -59,20 +59,52 @@ public class ViewModelScopeImpl internal constructor(
         _subscriptionCount.update { it - 1 }
     }
 
-    private var sendObjectWillChange: (() -> Unit)? = null
+    private var propertyAccess: ((NSObject) -> Unit)? = null
 
-    override fun setSendObjectWillChange(sendObjectWillChange: () -> Unit) {
-        if (this.sendObjectWillChange != null) {
+    override fun setPropertyAccess(propertyAccess: (NSObject?) -> Unit) {
+        if (this.propertyAccess != null) {
             throw IllegalStateException("KMMViewModel can't be wrapped more than once")
         }
-        this.sendObjectWillChange = sendObjectWillChange
+        this.propertyAccess = propertyAccess
     }
 
     /**
-     * Invokes the object will change listener set by [setSendObjectWillChange].
+     * Invokes the listener set by [setPropertyAccess].
      */
-    public fun sendObjectWillChange() {
-        sendObjectWillChange?.invoke()
+    public fun propertyAccess(property: Any) {
+        propertyAccess?.invoke(property as NSObject)
+    }
+
+    private var propertyWillSet: ((NSObject) -> Unit)? = null
+
+    override fun setPropertyWillSet(propertyWillSet: (NSObject?) -> Unit) {
+        if (this.propertyWillSet != null) {
+            throw IllegalStateException("KMMViewModel can't be wrapped more than once")
+        }
+        this.propertyWillSet = propertyWillSet
+    }
+
+    /**
+     * Invokes the listener set by [setPropertyWillSet].
+     */
+    public fun propertyWillSet(property: Any) {
+        propertyWillSet?.invoke(property as NSObject)
+    }
+
+    private var propertyDidSet: ((NSObject) -> Unit)? = null
+
+    override fun setPropertyDidSet(propertyDidSet: (NSObject?) -> Unit) {
+        if (this.propertyDidSet != null) {
+            throw IllegalStateException("KMMViewModel can't be wrapped more than once")
+        }
+        this.propertyDidSet = propertyDidSet
+    }
+
+    /**
+     * Invokes the listener set by [setPropertyDidSet].
+     */
+    public fun propertyDidSet(property: Any) {
+        propertyDidSet?.invoke(property as NSObject)
     }
 
     override fun cancel() {

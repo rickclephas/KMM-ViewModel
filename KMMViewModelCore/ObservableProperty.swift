@@ -8,29 +8,40 @@
 import Observation
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-public protocol ObservableProperty<ViewModel> {
-    associatedtype ViewModel: Observable
+public protocol ObservableProperty {
     
-    func willSet(registrar: ObservationRegistrar, viewModel: ViewModel)
+    func initialize(subject: any Observable)
     
-    func didSet(registrar: ObservationRegistrar, viewModel: ViewModel)
+    func willSet(registrar: Observation.ObservationRegistrar, subject: any Observable)
     
-    func access(registrar: ObservationRegistrar, viewModel: ViewModel)
+    func didSet(registrar: Observation.ObservationRegistrar, subject: any Observable)
+    
+    func access(registrar: Observation.ObservationRegistrar, subject: any Observable)
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension KeyPath: ObservableProperty where Root: Observable {
-    public typealias ViewModel = Root
     
-    public func willSet(registrar: ObservationRegistrar, viewModel: ViewModel) {
-        registrar.willSet(viewModel, keyPath: self)
+    private func root(_ subject: any Observable) -> Root {
+        guard let root = subject as? Root else {
+            fatalError("subject must be of type Root")
+        }
+        return root
+    }
+    
+    public func initialize(subject: any Observable) {
+        _  = root(subject)[keyPath: self]
+    }
+    
+    public func willSet(registrar: Observation.ObservationRegistrar, subject: any Observable) {
+        registrar.willSet(root(subject), keyPath: self)
     }
 
-    public func didSet(registrar: ObservationRegistrar, viewModel: ViewModel) {
-        registrar.didSet(viewModel, keyPath: self)
+    public func didSet(registrar: Observation.ObservationRegistrar, subject: any Observable) {
+        registrar.didSet(root(subject), keyPath: self)
     }
     
-    public func access(registrar: ObservationRegistrar, viewModel: ViewModel) {
-        registrar.access(viewModel, keyPath: self)
+    public func access(registrar: Observation.ObservationRegistrar, subject: any Observable) {
+        registrar.access(root(subject), keyPath: self)
     }
 }

@@ -14,7 +14,8 @@ public actual fun <T> MutableStateFlow(
 ): MutableStateFlow<T> = MutableStateFlowImpl(viewModelScope.asImpl(), MutableStateFlow(value))
 
 /**
- * A [MutableStateFlow] that triggers [ViewModelScopeImpl.sendObjectWillChange]
+ * A [MutableStateFlow] that triggers [ViewModelScopeImpl.propertyWillSet],
+ * [ViewModelScopeImpl.propertyDidSet] and [ViewModelScopeImpl.propertyAccess]
  * and accounts for the [ViewModelScopeImpl.subscriptionCount].
  */
 private class MutableStateFlowImpl<T>(
@@ -23,16 +24,21 @@ private class MutableStateFlowImpl<T>(
 ): MutableStateFlow<T> {
 
     override var value: T
-        get() = stateFlow.value
+        get() {
+            viewModelScope.propertyAccess(this)
+            return stateFlow.value
+        }
         set(value) {
-            if (stateFlow.value != value) {
-                viewModelScope.sendObjectWillChange()
-            }
+            val changed = stateFlow.value != value
+            if (changed) viewModelScope.propertyWillSet(this)
             stateFlow.value = value
+            if (changed) viewModelScope.propertyDidSet(this)
         }
 
-    override val replayCache: List<T>
-        get() = stateFlow.replayCache
+    override val replayCache: List<T> get() {
+        viewModelScope.propertyAccess(this)
+        return stateFlow.replayCache
+    }
 
     override val subscriptionCount: StateFlow<Int> =
         SubscriptionCountFlow(viewModelScope.subscriptionCount, stateFlow.subscriptionCount)
@@ -41,10 +47,11 @@ private class MutableStateFlowImpl<T>(
         stateFlow.collect(collector)
 
     override fun compareAndSet(expect: T, update: T): Boolean {
-        if (stateFlow.value == expect && expect != update) {
-            viewModelScope.sendObjectWillChange()
-        }
-        return stateFlow.compareAndSet(expect, update)
+        val changed = stateFlow.value == expect && expect != update
+        if (changed) viewModelScope.propertyWillSet(this)
+        val result = stateFlow.compareAndSet(expect, update)
+        if (changed) viewModelScope.propertyDidSet(this)
+        return result
     }
 
     @ExperimentalCoroutinesApi
