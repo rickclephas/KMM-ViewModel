@@ -14,7 +14,9 @@ __attribute__((swift_name("ViewModelScope")))
 @protocol KMMVMViewModelScope
 - (void)increaseSubscriptionCount;
 - (void)decreaseSubscriptionCount;
-- (void)setSendObjectWillChange:(void (^ _Nonnull)(void))sendObjectWillChange;
+- (void)setPropertyAccess:(void (^ _Nonnull)(NSObject * _Nonnull))propertyAccess;
+- (void)setPropertyWillSet:(void (^ _Nonnull)(NSObject * _Nonnull))propertyWillSet;
+- (void)setPropertyDidSet:(void (^ _Nonnull)(NSObject * _Nonnull))propertyDidSet;
 - (void)cancel;
 @end
 

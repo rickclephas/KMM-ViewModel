@@ -20,8 +20,12 @@ public final class ObservableViewModelPublisher: Publisher {
     
     internal init(_ viewModel: any KMMViewModel, _ objectWillChange: ObservableObjectPublisher) {
         self.viewModel = viewModel
-        viewModel.viewModelScope.setSendObjectWillChange { [weak self] in
-            self?.publisher.send()
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *), let observable = viewModel as? (any Observable) {
+            observable.observationRegistrar.initialize(observable, publisher)
+        } else {
+            viewModel.viewModelScope.setPropertyWillSet { [weak self] _ in
+                self?.publisher.send()
+            }
         }
         objectWillChangeCancellable = objectWillChange.sink { [weak self] _ in
             self?.publisher.send()

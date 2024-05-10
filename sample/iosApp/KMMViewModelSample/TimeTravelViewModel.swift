@@ -6,6 +6,7 @@
 //
 
 import KMMViewModelSampleShared
+import KMMViewModelCore
 
 class TimeTravelViewModel: KMMViewModelSampleShared.TimeTravelViewModel {
     
@@ -15,5 +16,15 @@ class TimeTravelViewModel: KMMViewModelSampleShared.TimeTravelViewModel {
         isResetDisabled = !isResetDisabled
         guard isResetDisabled else { return }
         super.resetTime()
+    }
+}
+
+@available(iOS 17.0, *)
+extension KMMViewModelSampleShared.TimeTravelViewModel: Observable {
+    public var observationRegistrar: ObservationRegistrar {
+        \.actualTime
+        \.travelEffect
+        \.currentTime
+        \.isFixedTime
     }
 }
